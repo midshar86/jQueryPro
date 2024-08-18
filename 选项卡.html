@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    * {
+      padding: 0;
+      margin: 0;
+    }
+
+    ul {
+      list-style: none;
+      margin: 10px;
+      width: 350px;
+    }
+
+    .list {
+      display: flex;
+    }
+
+    .list>li {
+      font-weight: bold;
+      flex: 1;
+      text-align: center;
+      height: 40px;
+      line-height: 40px;
+    }
+
+    .list>li.active {
+      background: orange;
+      color: white;
+    }
+
+    .card {
+      position: relative;
+    }
+
+    .card>li {
+      height: 200px;
+      width: 100%;
+      position: absolute;
+      left: 0;
+      top: 0;
+    }
+
+    .card>li.active {
+      z-index: 100;
+      background-color: white;
+    }
+  </style>
+  <script src="./jQuery.js"></script>
+</head>
+
+<body>
+  <ul class="list">
+    <li class="active">1</li>
+    <li>2</li>
+    <li>3</li>
+    <li>4</li>
+  </ul>
+  <ul class="card">
+    <li class="active">11</li>
+    <li>22</li>
+    <li>33</li>
+    <li>44</li>
+  </ul>
+  <script>
+    $(".list li").on("click", function () {
+      $(this).addClass("active").siblings().removeClass("active")
+      $(".card li").removeClass("active").eq($(this).index()).addClass("active")
+    })
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    * {
+      padding: 0;
+      margin: 0;
+    }
+
+    .container {
+      position: relative;
+    }
+
+    ul {
+      list-style: none;
+      width: 500px;
+      margin: 10px 50px;
+    }
+
+    .head {
+      display: flex;
+      width: 500px;
+      border: 1px solid #ccc;
+    }
+
+    .head>li {
+      flex: 1;
+      line-height: 40px;
+      text-align: center;
+    }
+
+    .head>li.active {
+      color: red;
+      font-weight: bold;
+    }
+
+    .mask {
+      display: inline-block;
+      width: 100px;
+      height: 40px;
+      border: 1px solid #ccc;
+      background-color: rgba(255, 166, 0);
+      position: absolute;
+      left: 50px;
+      top: 0;
+      z-index: -1;
+    }
+
+    .card {
+      position: relative;
+      height: 300px;
+      border: 1px solid #ccc;
+    }
+
+    .card>li {
+      position: absolute;
+      display: none;
+    }
+
+    .card>li.active {
+      display: block;
+      width: 100%;
+      text-align: center;
+      line-height: 300px;
+    }
+  </style>
+  <script src="./jQuery.js"></script>
+</head>
+
+<body>
+  <div class="container">
+    <ul class="head">
+      <li class="active">菜单1</li>
+      <li>菜单2</li>
+      <li>菜单3</li>
+      <li>菜单4</li>
+      <li>菜单5</li>
+    </ul>
+    <span class="mask"></span>
+  </div>
+  <ul class="card">
+    <li class="active">内容1</li>
+    <li>内容2</li>
+    <li>内容3</li>
+    <li>内容4</li>
+    <li>内容5</li>
+  </ul>
+  <script>
+    $(".head").on("mouseenter", "li", function (e) {
+      $(this).addClass("active").siblings().removeClass("active")
+      $(".card>li").eq($(this).index()).addClass("active").siblings().removeClass("active")
+      $(".mask").stop().animate({
+        left: $(this).index() * 100 + 50
+      }, 200)
+    })
+    $(".head").on("mouseleave", "li", function () {
+      $(this).removeClass("active")
+      $(".head>li").eq(0).addClass("active")
+      $(".card>li").eq(0).addClass("active").siblings().removeClass("active")
+      $(".mask").stop().animate({
+        left: 50
+      }, 500)
+    })
+  </script>
+</body>
+
+</html>

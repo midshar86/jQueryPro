@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <script src="./jQuery.js"></script>
+</head>
+
+<body>
+  <script>
+    // 利用递归
+    // 接收多个对象进行深拷贝
+    function deepCopy(target, ...argus) {
+      // 判断是否每个元素都是对象类型
+      argus.forEach(item => {
+        if (typeof item !== "object") {
+          throw new Error("mistake params")
+        }
+      })
+
+      // 遍历每个元素
+      for (let i = 0; i < argus.length; i++) {
+        // 遍历每个元素对象的对象
+        for (let key in argus[i]) {
+          if (Object.prototype.toString.call(argus[i]) === "[object Object]") {
+            target[key] = {}
+          }
+          if (Object.prototype.toString.call(argus[i]) === "[object Array]") {
+            target[key] = []
+          }
+          if (typeof argus[i][key] === 'object') {
+            deepCopy(target[key], argus[i][key])
+          } else {
+            target[key] = argus[i][key]
+          }
+        }
+      }
+    }
+
+    let tObj = {
+      name: 'midshar',
+      age: 18,
+      menber: {
+        dad: {
+          name: 'Tom',
+          age: 48
+        },
+        mom: {
+          name: "Lucy",
+          age: 50
+        }
+      },
+      hobbies: ['swimming', 'singing'],
+      salary: undefined
+    }
+    let tObjs = {
+      kkk: 111,
+      bbb: 222
+    }
+    let empty = {}
+    deepCopy(empty, tObj, tObjs)
+    tObj.menber.dad.name = "5555"
+    tObj.hobbies[1] = "6666"
+    tObjs.bbb = 888
+    console.log(empty);
+  </script>
+</body>
+
+</html>

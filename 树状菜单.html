@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    * {
+      padding: 0;
+      margin: 0;
+    }
+
+    ul {
+      list-style: none;
+    }
+
+    ul>li {
+      line-height: 30px;
+    }
+
+    ul>li::before {
+      content: "+ ";
+      display: inline-block;
+      width: 10px;
+    }
+
+    ul>li.active::before {
+      content: "- ";
+    }
+
+    .list {
+      margin: 20px 40px;
+    }
+
+    li>ul {
+      margin-left: 15px;
+      display: none;
+    }
+  </style>
+  <script src="./jQuery.js"></script>
+</head>
+
+<body>
+  <ul class="list">
+    <li>001
+      <ul>
+        <li>001-001</li>
+        <li>001-002</li>
+        <li>001-003</li>
+      </ul>
+    </li>
+    <li>002
+      <ul>
+        <li>002-001</li>
+        <li>002-002</li>
+        <li>002-003</li>
+      </ul>
+    </li>
+    <li>003
+      <ul>
+        <li>003-001</li>
+        <li>003-002</li>
+        <li>003-003</li>
+      </ul>
+    </li>
+  </ul>
+  <script>
+    $(".list").on("click", "li", function (e) {
+      e.stopPropagation()
+      // 支持同时打开
+      // $(this).toggleClass('active').children().slideToggle(500)
+      // 不支持同时打开
+      $(this).toggleClass("active").siblings().removeClass("active")
+      $(this).children().slideToggle(200).parent().siblings().children().slideUp()
+    })
+  </script>
+</body>
+
+</html>

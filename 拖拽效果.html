@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    * {
+      padding: 0;
+      margin: 0;
+    }
+
+    .box {
+      width: 100px;
+      height: 100px;
+      background-color: orange;
+    }
+  </style>
+  <script src="./jQuery.js"></script>
+</head>
+
+<body>
+  <div class="box"></div>
+  <script>
+    // 鼠标按下时,添加鼠标移动事件
+    $(".box").on("mousedown", function (e) {
+      let clickX = e.offsetX
+      let clickY = e.offsetY
+      $(document).on("mousemove", function (e) {
+        let boxLeft = e.clientX - clickX;
+        let boxTop = e.clientY - clickY;
+        let maxBoxLeft = window.innerWidth - $(".box").width()
+        let maxBoxTop = window.innerHeight - $(".box").height()
+        boxLeft = boxLeft < 0 ? 0 : (boxLeft > maxBoxLeft ? maxBoxLeft : boxLeft)
+        boxTop = boxTop < 0 ? 0 : (boxTop > maxBoxTop ? maxBoxTop : boxTop)
+        $(".box").offset({
+          left: boxLeft,
+          top: boxTop
+        })
+      })
+    })
+    // 鼠标抬起时,解绑事件
+    $(".box").on("mouseup", function (e) {
+      $(document).off("mousemove")
+    })
+  </script>
+</body>
+
+</html>

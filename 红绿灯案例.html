@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    .box {
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      background-color: red;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="box"></div>
+  <script>
+    let boxEle = document.querySelector(".box")
+
+    function changeColor(color, time) {
+      return new Promise((resolve, reject) => {
+        let timer = setTimeout(() => {
+          boxEle.style.backgroundColor = color
+          clearTimeout(timer)
+          resolve()
+        }, time)
+      })
+    }
+
+    function turnOnLight() {
+      changeColor("green", 2000)
+        .then(() => changeColor("yellow", 2000))
+        .then(() => changeColor("red", 1000))
+        .then(() => turnOnLight())
+    }
+
+    turnOnLight()
+  </script>
+</body>
+
+</html>
